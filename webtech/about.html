@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenfield University - About</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Greenfield University</h1>
+        <p class="tagline">Class Login System</p>
+        <p id="liveClock" class="live-clock"></p>
+        <nav>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+            <ul id="navMenu">
+                <li id="nav-home"><a href="index.html">Home</a></li>
+                <li id="nav-about"><a href="about.html">About</a></li>
+                <li id="nav-contact"><a href="contact.html">Contact</a></li>
+                <li id="nav-login"><a href="login.html">Login</a></li>
+                <li id="nav-register-student"><a href="register-student.html">Register (Student)</a></li>
+                <li id="nav-register-admin"><a href="register-admin.html">Register (Admin)</a></li>
+                <li id="nav-enroll"><a href="enroll.html">Enroll in a Class</a></li>
+                <li id="nav-dashboard" style="display:none"><a href="student-dashboard.html">Dashboard</a></li>
+                <li id="nav-logout" style="display:none"><a href="#" id="logoutLink">Logout</a></li>
+                <li id="nav-datetime"><a href="datetime.php">Server Date &amp; Time (PHP)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="description">
+            <h2>About Greenfield University</h2>
+            <p>
+                Founded to serve the next generation of thinkers and innovators,
+                Greenfield University offers a wide range of undergraduate and
+                graduate programs across science, business, and the humanities.
+                Our campus combines modern facilities with a supportive learning
+                community.
+            </p>
+        </section>
+
+        <section id="mission">
+            <h2>Our Mission</h2>
+            <p>
+                To provide accessible, high-quality education that equips students
+                with the knowledge, skills, and values needed to succeed in their
+                careers and contribute positively to society.
+            </p>
+        </section>
+
+        <section id="vision">
+            <h2>Our Vision</h2>
+            <p>
+                To be a leading university recognized for academic excellence,
+                innovative research, and the development of ethical, globally-minded
+                graduates.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Greenfield University. All rights reserved.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => { initPage(); });
+    </script>
+
+</body>
+</html>

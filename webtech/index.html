@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenfield University - Class Login System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Greenfield University</h1>
+        <p class="tagline">Class Login System</p>
+        <p id="liveClock" class="live-clock"></p>
+        <nav>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+            <ul id="navMenu">
+                <li id="nav-home"><a href="index.html">Home</a></li>
+                <li id="nav-about"><a href="about.html">About</a></li>
+                <li id="nav-contact"><a href="contact.html">Contact</a></li>
+                <li id="nav-login"><a href="login.html">Login</a></li>
+                <li id="nav-register-student"><a href="register-student.html">Register (Student)</a></li>
+                <li id="nav-register-admin"><a href="register-admin.html">Register (Admin)</a></li>
+                <li id="nav-enroll"><a href="enroll.html">Enroll in a Class</a></li>
+                <li id="nav-dashboard" style="display:none"><a href="student-dashboard.html">Dashboard</a></li>
+                <li id="nav-logout" style="display:none"><a href="#" id="logoutLink">Logout</a></li>
+                <li id="nav-datetime"><a href="datetime.php">Server Date &amp; Time (PHP)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="welcome">
+            <h2>Welcome to the Greenfield University Class Login System</h2>
+            <p>
+                Greenfield University is committed to academic excellence, innovation,
+                and community engagement. This portal lets students register for an
+                account, log in, and enroll in the classes listed below. Class data on
+                this page loads dynamically from a JSON file using JavaScript.
+            </p>
+        </section>
+
+        <section id="programs">
+            <h2>Our Academic Programs</h2>
+            <div id="programs-list">
+                <p>Loading classes&hellip;</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Greenfield University. All rights reserved.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const data = await initPage();
+            renderPrograms(data.classes);
+        });
+
+        function renderPrograms(classes) {
+            const container = document.getElementById("programs-list");
+            container.innerHTML = "";
+            classes.forEach(cls => {
+                const article = document.createElement("article");
+                const h3 = document.createElement("h3");
+                h3.textContent = cls.name;
+                const p = document.createElement("p");
+                p.textContent = cls.description;
+                article.appendChild(h3);
+                article.appendChild(p);
+                container.appendChild(article);
+            });
+        }
+    </script>
+
+</body>
+</html>

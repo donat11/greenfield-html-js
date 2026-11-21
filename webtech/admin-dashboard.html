@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenfield University - Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Greenfield University</h1>
+        <p class="tagline">Class Login System</p>
+        <p id="liveClock" class="live-clock"></p>
+        <nav>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+            <ul id="navMenu">
+                <li id="nav-home"><a href="index.html">Home</a></li>
+                <li id="nav-about"><a href="about.html">About</a></li>
+                <li id="nav-contact"><a href="contact.html">Contact</a></li>
+                <li id="nav-login"><a href="login.html">Login</a></li>
+                <li id="nav-register-student"><a href="register-student.html">Register (Student)</a></li>
+                <li id="nav-register-admin"><a href="register-admin.html">Register (Admin)</a></li>
+                <li id="nav-enroll"><a href="enroll.html">Enroll in a Class</a></li>
+                <li id="nav-dashboard" style="display:none"><a href="admin-dashboard.html">Dashboard</a></li>
+                <li id="nav-logout" style="display:none"><a href="#" id="logoutLink">Logout</a></li>
+                <li id="nav-datetime"><a href="datetime.php">Server Date &amp; Time (PHP)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="dashboard-welcome">
+            <h2>Welcome, <span id="adminName">Admin</span>!</h2>
+            <p>This is the administrator dashboard. It lists every registered user and their class enrollments, all pulled from local storage (seeded from a JSON file) - no database required.</p>
+        </section>
+
+        <section id="all-users">
+            <h2>Registered Users</h2>
+            <div class="table-wrap">
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Username</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="all-enrollments">
+            <h2>Class Enrollments</h2>
+            <div id="enrollmentsSummary"><p>No enrollments yet.</p></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Greenfield University. All rights reserved.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            await initPage();
+            const user = requireRole("admin");
+            if (!user) return;
+
+            document.getElementById("adminName").textContent = user.fullname;
+            renderUsers();
+            renderEnrollmentsSummary();
+        });
+
+        function renderUsers() {
+            const tbody = document.querySelector("#usersTable tbody");
+            tbody.innerHTML = "";
+            getUsers().forEach(u => {
+                const tr = document.createElement("tr");
+                tr.innerHTML =
+                    "<td>" + u.fullname + "</td>" +
+                    "<td>" + u.username + "</td>" +
+                    "<td>" + u.role + "</td>";
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderEnrollmentsSummary() {
+            const all = getEnrollments();
+            const usernames = Object.keys(all);
+            if (usernames.length === 0) return;
+
+            const container = document.getElementById("enrollmentsSummary");
+            const ul = document.createElement("ul");
+            usernames.forEach(username => {
+                const li = document.createElement("li");
+                li.textContent = username + ": " + all[username].join(", ");
+                ul.appendChild(li);
+            });
+            container.innerHTML = "";
+            container.appendChild(ul);
+        }
+    </script>
+
+</body>
+</html>

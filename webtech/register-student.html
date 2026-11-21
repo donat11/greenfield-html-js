@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenfield University - Student Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Greenfield University</h1>
+        <p class="tagline">Class Login System</p>
+        <p id="liveClock" class="live-clock"></p>
+        <nav>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+            <ul id="navMenu">
+                <li id="nav-home"><a href="index.html">Home</a></li>
+                <li id="nav-about"><a href="about.html">About</a></li>
+                <li id="nav-contact"><a href="contact.html">Contact</a></li>
+                <li id="nav-login"><a href="login.html">Login</a></li>
+                <li id="nav-register-student"><a href="register-student.html">Register (Student)</a></li>
+                <li id="nav-register-admin"><a href="register-admin.html">Register (Admin)</a></li>
+                <li id="nav-enroll"><a href="enroll.html">Enroll in a Class</a></li>
+                <li id="nav-dashboard" style="display:none"><a href="student-dashboard.html">Dashboard</a></li>
+                <li id="nav-logout" style="display:none"><a href="#" id="logoutLink">Logout</a></li>
+                <li id="nav-datetime"><a href="datetime.php">Server Date &amp; Time (PHP)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="register-form">
+            <h2>Student Registration</h2>
+
+            <div id="registerMessage" class="message" style="display:none"></div>
+
+            <form id="registerForm" novalidate>
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" required>
+
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="username">Choose a Username</label>
+                <input type="text" id="username" name="username" required minlength="3">
+
+                <label for="password">Choose a Password</label>
+                <input type="password" id="password" name="password" required minlength="6">
+
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6">
+
+                <button type="submit">Register as Student</button>
+            </form>
+
+            <p>Already have an account? <a href="login.html">Log in here</a>.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Greenfield University. All rights reserved.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            await initPage();
+            document.getElementById("registerForm").addEventListener("submit", handleRegister);
+        });
+
+        function handleRegister(e) {
+            e.preventDefault();
+
+            const fullname = document.getElementById("fullname").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+            if (!fullname || !email || !username || !password || !confirmPassword) {
+                showMessage("registerMessage", "Please fill in all fields.", "error");
+                return;
+            }
+            if (!isValidEmail(email)) {
+                showMessage("registerMessage", "Please enter a valid email address.", "error");
+                return;
+            }
+            if (username.length < 3) {
+                showMessage("registerMessage", "Username must be at least 3 characters.", "error");
+                return;
+            }
+            if (password.length < 6) {
+                showMessage("registerMessage", "Password must be at least 6 characters.", "error");
+                return;
+            }
+            if (password !== confirmPassword) {
+                showMessage("registerMessage", "Passwords do not match.", "error");
+                return;
+            }
+            if (usernameExists(username)) {
+                showMessage("registerMessage", "That username is already taken.", "error");
+                return;
+            }
+
+            const users = getUsers();
+            users.push({
+                username: username,
+                password: password,
+                role: "student",
+                fullname: fullname,
+                email: email
+            });
+            saveUsers(users);
+
+            showMessage("registerMessage", "Account created for " + fullname + "! You can now log in.", "success");
+            e.target.reset();
+        }
+    </script>
+
+</body>
+</html>

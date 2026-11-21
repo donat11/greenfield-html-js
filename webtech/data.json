@@ -1,0 +1,30 @@
+{
+  "classes": [
+    {
+      "name": "Computer Science",
+      "description": "Learn software engineering, algorithms, web technologies, and artificial intelligence."
+    },
+    {
+      "name": "Business Administration",
+      "description": "Develop skills in management, accounting, finance, and entrepreneurship."
+    },
+    {
+      "name": "English Linguistics",
+      "description": "Explore phonetics, syntax, and the structure of language in depth."
+    }
+  ],
+  "demoUsers": [
+    {
+      "username": "student",
+      "password": "pass123",
+      "role": "student",
+      "fullname": "Demo Student"
+    },
+    {
+      "username": "admin",
+      "password": "admin123",
+      "role": "admin",
+      "fullname": "Demo Admin"
+    }
+  ]
+}
